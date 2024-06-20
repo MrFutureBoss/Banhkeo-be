@@ -1,0 +1,7 @@
+GET http://localhost:3333
+####
+//Get all user
+GET http://localhost:3333/user
+####
+//Get user by id
+GET http://localhost:3333/user/60d21b4667d0d8992e610c88
