@@ -25,9 +25,6 @@ app.use('/.netlify/functions/api', defaultroute)
 app.use('/user', UserRouter);
 app.use('/product', ProductRouter);
 
-defaultroute.get("/", (req, res) => {
-    res.send("App is running..");
-});
 app.use(async (req, res, next) => {
     next(createError.NotFound());
 })
