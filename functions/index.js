@@ -2,9 +2,9 @@ import express from "express";
 import morgan from "morgan";
 import createError from "http-errors";
 import dotenv from "dotenv";
-import connectDB from "./functions/helpers/init_mongodb.js";
-import UserRouter from "./functions/router/User.js";
-import ProductRouter from "./functions/router/Product.js";
+import connectDB from "./helpers/init_mongodb.js";
+import UserRouter from "./router/User.js";
+import ProductRouter from "./router/Product.js";
 import cors from 'cors'
 const defaultroute = express.Router();
 import serverless from 'serverless-http';
@@ -21,9 +21,9 @@ app.use(cors({ credentials: true, preflightContinue: true }));
 app.get("/", async (req, res) => {
     res.send("Hello Mai Tu");
 });
-app.use('/', defaultroute)
-app.use('/user', UserRouter);
-app.use('/product', ProductRouter);
+app.use('/.netlify/functions/app', defaultroute)
+app.use('/.netlify/functions/app/user', UserRouter);
+app.use('/.netlify/functions/app/product', ProductRouter);
 
 app.use(async (req, res, next) => {
     next(createError.NotFound());

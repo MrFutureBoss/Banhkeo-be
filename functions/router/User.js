@@ -1,6 +1,6 @@
 import express from "express"
 import createHttpError from "http-errors"
-import User from "../../model/User.jsel/User.js"
+import User from "../model/User.js"
 
 const UserRouter = express.Router()
 
