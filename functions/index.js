@@ -21,9 +21,9 @@ app.use(cors({ credentials: true, preflightContinue: true }));
 app.get("/", async (req, res) => {
     res.send("Hello Mai Tu");
 });
-app.use('/.netlify/function/api', defaultroute)
-app.use('/.netlify/functions/api/user', UserRouter);
-app.use('/.netlify/functions/api/product', ProductRouter);
+app.use('/', defaultroute)
+app.use('/user', UserRouter);
+app.use('/product', ProductRouter);
 
 app.use(async (req, res, next) => {
     next(createError.NotFound());
