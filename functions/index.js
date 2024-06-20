@@ -6,7 +6,6 @@ import connectDB from "./helpers/init_mongodb.js";
 import UserRouter from "./router/User.js";
 import ProductRouter from "./router/Product.js";
 import cors from 'cors'
-const defaultroute = express.Router();
 import serverless from 'serverless-http';
 dotenv.config();
 const PORT = process.env.PORT;
@@ -21,7 +20,6 @@ app.use(cors({ credentials: true, preflightContinue: true }));
 app.get("/", async (req, res) => {
     res.send("Hello Mai Tu");
 });
-app.use('/.netlify/functions/api', defaultroute)
 app.use('/user', UserRouter);
 app.use('/product', ProductRouter);
 
@@ -30,18 +28,18 @@ app.use(async (req, res, next) => {
 })
 
 
-// app.use((err, req, res, next) => {
-//     res.status(err.status || 500);
-//     res.send({
-//         error: {
-//             status: err.status || 500,
-//             message: err.message,
-//         }
-//     });
-// });
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send({
+        error: {
+            status: err.status || 500,
+            message: err.message,
+        }
+    });
+});
 
 app.listen(PORT, () => {
     connectDB();
     console.log(`Server running on port ${PORT}`);
 })
-export const handler = serverless(app);
+
