@@ -22,8 +22,8 @@ app.get("/", async (req, res) => {
     res.send("Hello Mai Tu");
 });
 app.use('/.netlify/functions/app', defaultroute)
-app.use('/.netlify/functions/app/user', UserRouter);
-app.use('/.netlify/functions/app/product', ProductRouter);
+app.use('/user', UserRouter);
+app.use('/product', ProductRouter);
 
 defaultroute.get("/", (req, res) => {
     res.send("App is running..");
@@ -33,15 +33,15 @@ app.use(async (req, res, next) => {
 })
 
 
-app.use((err, req, res, next) => {
-    res.status(err.status || 500);
-    res.send({
-        error: {
-            status: err.status || 500,
-            message: err.message,
-        }
-    });
-});
+// app.use((err, req, res, next) => {
+//     res.status(err.status || 500);
+//     res.send({
+//         error: {
+//             status: err.status || 500,
+//             message: err.message,
+//         }
+//     });
+// });
 
 app.listen(PORT, () => {
     connectDB();
