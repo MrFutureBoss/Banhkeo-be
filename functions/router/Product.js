@@ -14,6 +14,30 @@ ProductRouter.get('/', async (req, res, next) => {
     }
 })
 
+ProductRouter.get('/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const product = await Product.findById(id);
+        if (!product) throw createHttpError.NotFound();
+        res.send(product);
+        return product;
+    } catch (error) {
+        next(error);
+    }
+});
+
+ProductRouter.get('/type/:type', async (req, res, next) => {
+    try {
+        const { type } = req.params;
+        const products = await Product.find({ type: type });
+        if (!products || products.length === 0) throw createHttpError.NotFound();
+        res.send(products);
+        return products;
+    } catch (error) {
+        next(error);
+    }
+});
+
 ProductRouter.post('/create', async (req, res, next) => {
     try {
         const { name } = req.body
