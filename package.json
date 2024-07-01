@@ -12,6 +12,8 @@
   "author": "mai tu",
   "license": "ISC",
   "dependencies": {
+    "@payos/node": "^1.0.6",
+    "auto-bind": "^5.0.1",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.2.0",
     "dotenv": "^16.4.5",
