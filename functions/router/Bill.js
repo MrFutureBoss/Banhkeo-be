@@ -1,6 +1,7 @@
 import express from "express"
 import createHttpError from "http-errors"
 import Bill from "../model/Bill.js"
+import Product from "../model/Product.js"
 
 const BillRouter = express.Router()
 
@@ -40,32 +41,32 @@ BillRouter.get('/type/:type', async (req, res, next) => {
 
 BillRouter.post('/create', async (req, res, next) => {
     try {
-        const { name, email, phone, location, total, description } = req.body;
+        const { name, email, phone, location, total, listcart, seri } = req.body;
 
         // Kiểm tra name có tồn tại hay không
         if (!name) {
             throw createHttpError.BadRequest('Name is required');
         }
 
-        // Kiểm tra xem Bill đã tồn tại hay chưa
-        const existBill = await Bill.findOne({ name });
-        if (existBill) {
-            throw createHttpError.Conflict(`${name} already exists.`);
-        }
+        // Tạo một mảng chứa các sản phẩm dựa trên listcart
+        const productList = await Promise.all(listcart.map(async productId => {
+            const product = await Product.findById(productId);
+            return product;
+        }));
 
-        // Tạo một instance mới của Bill
+        // Tạo hóa đơn mới với thông tin đã nhận được từ req.body và danh sách sản phẩm đã lấy được
         const newBill = new Bill({
             name,
             email,
             phone,
             location,
             total,
-            description
+            listcart: productList,
+            seri
         });
 
         // Lưu Bill vào MongoDB
         const savedBill = await newBill.save();
-
         res.status(201).json(savedBill); // Trả về Bill đã lưu thành công
     } catch (error) {
         next(error); // Chuyển lỗi tới middleware error handling

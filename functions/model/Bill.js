@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import ProductSchema from "./Product.js";
 const BillSchema = new Schema({
     name: {
         type: String,
@@ -7,7 +8,6 @@ const BillSchema = new Schema({
     email: {
         type: String,
         maxLength: 255,
-        unique: true,
         minLenght: 5
     },
     phone: {
@@ -21,7 +21,7 @@ const BillSchema = new Schema({
     total: {
         type: Number,
     },
-    description: {
+    seri: {
         type: String,
         maxLength: 255
     },
@@ -29,6 +29,6 @@ const BillSchema = new Schema({
     updatedAt: { type: Date, default: Date.now }
 })
 
-const User = mongoose.model('bills', BillSchema)
+const Bill = mongoose.model('bills', BillSchema)
 
-export default User
+export default Bill
